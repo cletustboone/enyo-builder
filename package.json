@@ -2,7 +2,7 @@
   "name": "enyo-builder",
   "description": "Bundle your enyo project for production times.",
   "keywords" : ["enyo", "enyo deploy", "enyo builder"],
-  "version": "0.1.0",
+  "version": "0.1.1",
   "author": "Clay Simmons",
   "homepage": "http://www.letsmakeitgo.com",
   "repository": {
