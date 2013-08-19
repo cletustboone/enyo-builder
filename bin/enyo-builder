@@ -1,0 +1,17 @@
+#!/usr/bin/env node
+
+var
+options = require("../lib/cli").options,
+path = require("path"),
+Builder = require("../lib/builder"),
+builderInstance;
+
+// Must know path to enyo core in order to continue.
+if ( !options.enyo || options.enyo == "true" ) {
+  console.log("Can't continue. Try again with option -e or --enyo and tell me the path.");
+  process.exit();
+}
+
+// Let's build something together.
+builderInstance = new Builder( options );
+builderInstance.build();
