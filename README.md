@@ -34,14 +34,26 @@ Your project's package dependency files must be named `package.js`.
 Limitations
 -----------
 
-No support for less just yet. It wouldn't be difficult to add, but I'm not using it in my projects, so I didn't throw it in. In order for the script to bundle the enyo source with your project, you have to list enyo as a dependency in your project's `package.js` file. And when you do it, do it like this:
+No support for less just yet. It wouldn't be difficult to add, but I'm not using it in my projects, so I didn't throw it in. In order for the script to bundle the enyo source with your project, you have to list enyo as a dependency in your project's `package.js` file. But wait, that breaks things when you are debugging and you include the mandatory `enyo.js` file before your project's `package.js` file. This is how I get around it in my project's `package.js` file:
 
 ```JavaScript
-enyo.depends(
-  "$enyo/source/boot",
-  "$enyo/source",
-  // ... Other files needed by your project.
-);
+// Initialize my project's dependencies.
+var
+packageStack = [
+  "$lib/layout",
+  "file1.js",
+  "file2.js",
+  "file3.css"
+  // ... More files that describe my project
+];
+
+// If enyo.Component doesn't exist, this is the builder and we need to add enyo's
+// boot and source files to the top of the stack.
+if ( !enyo.Component ) {
+  packageStack.unshift( "$enyo/source/boot", "$enyo/source" );
+}
+// Call enyo.depends with my packageStack as a single array of args.
+enyo.depends.apply( this, packageStack );
 ````
 
 Usage
@@ -66,8 +78,9 @@ Options
 
 * `-e, --enyo`: Absolute or relative path to main enyo directory. This is the only required option. This is needed in order for the enyo dependency loader to work correctly.
 * `-s, --source`: Path to your project source files. Default is to assume your source lives at the same level as enyo directory.
-* `-o, --output`: Absolute or relative path to your build directory. Default is `build` at the same level as your project source files.
+* `-o, --output`: Can be a file or a directory. If the directory doesn't exist, it will be created. New directories are created recursively as needed. Path to file or directory can be absolute or relative. Default is `build/bundle.js` and `build/bundle.css` at the same level as your project source files.
 * `-m, --sourcemap`: Specify this option if you want the script to generate a source map file from your bundled files.
+* `-v, --verbose`: Lots of chit-chat about what's happening.
 
 Notes
 -----

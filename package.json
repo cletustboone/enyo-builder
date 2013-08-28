@@ -1,8 +1,12 @@
 {
   "name": "enyo-builder",
   "description": "Bundle your enyo project for production times.",
-  "keywords" : ["enyo", "enyo deploy", "enyo builder"],
-  "version": "0.1.1",
+  "keywords": [
+    "enyo",
+    "enyo deploy",
+    "enyo builder"
+  ],
+  "version": "0.1.3",
   "author": "Clay Simmons",
   "homepage": "http://www.letsmakeitgo.com",
   "repository": {
@@ -21,6 +25,7 @@
   "preferGlobal": true,
   "dependencies": {
     "nopt": "~2.1.2",
-    "uglify-js": "~2.3.6"
+    "uglify-js": "~2.3.6",
+    "mkdirp": "~0.3.5"
   }
 }
